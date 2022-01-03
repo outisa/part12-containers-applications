@@ -1,0 +1,85 @@
+Script started on 2021-12-29 18:50:34+02:00 [TERM="xterm-256color" TTY="/dev/pts/2" COLUMNS="123" LINES="40"]
+]0;ousavola@lx8-fuxi140: ~/part12-containers-applications/script-answers[01;32mousavola@lx8-fuxi140[00m:[01;34m~/part12-containers-applications/script-answers[00m$ docker container ls
+CONTAINER ID   IMAGE     COMMAND                  CREATED             STATUS             PORTS                                         NAMES
+f53014fae5b2   mongo     "docker-entrypoint.s…"   About an hour ago   Up About an hour   0.0.0.0:3456->27017/tcp, :::3456->27017/tcp   todo-backend_mongo_1
+]0;ousavola@lx8-fuxi140: ~/part12-containers-applications/script-answers[01;32mousavola@lx8-fuxi140[00m:[01;34m~/part12-containers-applications/script-answers[00m$ docker exec -it todo-backend_mongo_1 bash
+]0;root@f53014fae5b2: /root@f53014fae5b2:/# mongo -u root -p example
+MongoDB shell version v5.0.3
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("f5b320cf-5c36-47d4-b71e-393c7a14a4b1") }
+MongoDB server version: 5.0.3
+================
+Warning: the "mongo" shell has been superseded by "mongosh",
+which delivers improved usability and compatibility.The "mongo" shell has been deprecated and will be removed in
+an upcoming release.
+We recommend you begin using "mongosh".
+For installation instructions, see
+https://docs.mongodb.com/mongodb-shell/install/
+================
+---
+The server generated these startup warnings when booting: 
+        2021-12-29T15:23:48.831+00:00: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+---
+---
+        Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+        metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+        The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+        and anyone you share the URL with. MongoDB may use this information to make product
+        improvements and to suggest MongoDB products and deployment options to you.
+
+        To enable free monitoring, run the following command: db.enableFreeMonitoring()
+        To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+---
+> help[3G[Jhelp[7G
+	db.help()                    help on db methods
+	db.mycoll.help()             help on collection methods
+	sh.help()                    sharding helpers
+	rs.help()                    replica set helpers
+	help admin                   administrative help
+	help connect                 connecting to a db help
+	help keys                    key shortcuts
+	help misc                    misc things to know
+	help mr                      mapreduce
+
+	show dbs                     show database names
+	show collections             show collections in current database
+	show users                   show users in current database
+	show profile                 show most recent system.profile entries with time >= 1ms
+	show logs                    show the accessible logger names
+	show log [name]              prints out the last segment of log in memory, 'global' is default
+	use <db_name>                set current database
+	db.mycoll.find()             list objects in collection mycoll
+	db.mycoll.find( { a : 1 } )  list objects in mycoll where a == 1
+	it                           result of the last line evaluated; use to further iterate
+	DBQuery.shellBatchSize = x   set default number of items to display on shell
+	exit                         quit the mongo shell
+> show dbs[3G[Jshow dbs[11G
+admin         0.000GB
+config        0.000GB
+local         0.000GB
+the_database  0.000GB
+> use the_database[3G[Juse the_database[19G
+switched to db the_database
+> show collections[19G
+todos
+> db.todos.find({})[20G
+{ "_id" : ObjectId("61cc7d83a699518e5363f234"), "text" : "Write code", "done" : true }
+{ "_id" : ObjectId("61cc7d83a699518e5363f235"), "text" : "Learn about containers", "done" : false }
+> [3G[Jdb.todos.insertOne({text: "Increase the number of tools in my toolbelt", done:false})[88G[3G[Jdb.todos.insertOne({text: "Increase the number of tools in my toolbelt", done:false})[88G
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("61cc92a2d50ad3413fb69c6d")
+}
+> db.todos.find({})[3G[Jdb.todos.find({})[20G
+{ "_id" : ObjectId("61cc7d83a699518e5363f234"), "text" : "Write code", "done" : true }
+{ "_id" : ObjectId("61cc7d83a699518e5363f235"), "text" : "Learn about containers", "done" : false }
+{ "_id" : ObjectId("61cc92a2d50ad3413fb69c6d"), "text" : "Increase the number of tools in my toolbelt", "done" : false }
+> exit[3G[Jexit[7G
+bye
+]0;root@f53014fae5b2: /root@f53014fae5b2:/# exit
+exit
+]0;ousavola@lx8-fuxi140: ~/part12-containers-applications/script-answers[01;32mousavola@lx8-fuxi140[00m:[01;34m~/part12-containers-applications/script-answers[00m$ exit
+exit
+
+Script done on 2021-12-29 18:54:21+02:00 [COMMAND_EXIT_CODE="0"]

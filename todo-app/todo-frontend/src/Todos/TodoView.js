@@ -3,13 +3,16 @@ import axios from '../util/apiClient'
 
 import List from './List'
 import Form from './Form'
+import Todo from './Todo'
 
 const TodoView = () => {
   const [todos, setTodos] = useState([])
+  const [todoAlone, setTodo] = useState(null)
 
   const refreshTodos = async () => {
     const { data } = await axios.get('/todos')
     setTodos(data)
+    setTodo(null)
   }
 
   useEffect(() => {
@@ -34,11 +37,21 @@ const TodoView = () => {
     refreshTodos()
   }
 
+  const findTodo = async (todo) => {
+    const { data } = await axios.get(`/todos/${todo._id}`)
+    setTodo(data)
+  }
   return (
     <>
-      <h1>Todos</h1>
-      <Form createTodo={createTodo} />
-      <List todos={todos} deleteTodo={deleteTodo} completeTodo={completeTodo} />
+    {todoAlone ?
+        <Todo todo={todoAlone} refreshTodos={refreshTodos} /> 
+      :
+      <>
+        <h1>Todos to todo</h1>
+        <Form createTodo={createTodo} />
+        <List todos={todos} deleteTodo={deleteTodo} completeTodo={completeTodo} findTodo={findTodo}/>
+      </>
+    }
     </>
   )
 }

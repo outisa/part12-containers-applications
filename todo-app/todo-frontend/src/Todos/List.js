@@ -1,6 +1,6 @@
 import React from 'react'
 
-const TodoList = ({ todos, deleteTodo, completeTodo }) => {
+const TodoList = ({ todos, deleteTodo, completeTodo, findTodo }) => {
   const onClickDelete = (todo) => () => {
     deleteTodo(todo)
   }
@@ -34,11 +34,14 @@ const TodoList = ({ todos, deleteTodo, completeTodo }) => {
         )
 
         return (
-          <div style={{ display: 'flex', justifyContent: 'space-between', maxWidth: '70%', margin: 'auto' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', maxWidth: '70%', margin: 'auto' }} key={todo._id}>
             <span>
               {todo.text} 
             </span>
             {todo.done ? doneInfo : notDoneInfo}
+            <span>
+              <button onClick={() => findTodo(todo)}>Show this todo</button>
+            </span>
           </div>
         )
       }).reduce((acc, cur) => [...acc, <hr />, cur], [])}
